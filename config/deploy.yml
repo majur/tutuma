@@ -2,7 +2,7 @@
 service: tutuma
 
 # Name of the container image.
-image: your-user/tutuma
+image: majur/tutuma
 
 # Deploy to these servers.
 servers:
