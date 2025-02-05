@@ -25,7 +25,7 @@ servers:
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: your-user
+  username: majur
 
   # Always use an access token rather than real password when possible.
   password:
@@ -88,8 +88,8 @@ builder:
   #   - RAILS_MASTER_KEY
 
 # Use a different ssh user than root
-# ssh:
-#   user: app
+ssh:
+  user: deploy
 
 # Use accessory services (secrets come from .kamal/secrets).
 # accessories:
