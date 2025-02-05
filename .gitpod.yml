@@ -4,8 +4,15 @@
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
+image:
+  file: .gitpod.Dockerfile
+
 tasks:
-  - init: bin/setup
+  - init: |
+      docker info
+      bin/setup
     command: bin/rails server
 
-
+vscode:
+  extensions:
+    - ms-azuretools.vscode-docker

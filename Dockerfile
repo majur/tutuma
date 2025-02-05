@@ -33,6 +33,8 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+RUN gem update --system && gem install bundler -v 2.5.22
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
