@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_31_101304) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_10_202554) do
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.string "email"
+    t.string "token"
+    t.datetime "expires_at"
+    t.boolean "accepted"
+    t.integer "account_id", null: false
+    t.integer "inviter_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["account_id"], name: "index_invitations_on_account_id"
+    t.index ["inviter_id"], name: "index_invitations_on_inviter_id"
+    t.index ["token"], name: "index_invitations_on_token"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -25,8 +46,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_101304) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "account_id", null: false
+    t.boolean "admin", default: false
+    t.string "name"
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "invitations", "accounts"
+  add_foreign_key "invitations", "users", column: "inviter_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "users", "accounts"
 end
