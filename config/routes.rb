@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: "users#index"
   get "up" => "rails/health#show", as: :rails_health_check
   resource :session
-  resources :passwords, param: :token
+  resources :passwords, param: :token, only: [:new, :create, :edit, :update]
   get "/registration", to: "registrations#new", as: :new_registration
   post "/registration", to: "registrations#create"
   resources :invitations, only: [:new, :create]
