@@ -2,8 +2,6 @@
 
 one:
   name: MyString
-  admin: one
 
 two:
   name: MyString
-  admin: two
