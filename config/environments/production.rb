@@ -62,12 +62,14 @@ Rails.application.configure do
   # Nastavenie SMTP servera
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.m1.websupport.sk',  # alebo iný SMTP server
+    address: 'smtp.m1.websupport.sk',
     port: 465,
     domain: 'tutuma.matase.sk',
     user_name: Rails.application.credentials.dig(:smtp, :user_name),
     password: Rails.application.credentials.dig(:smtp, :password),
     authentication: :plain,
+    ssl: true,
+    tls: true,
     enable_starttls_auto: true
   }
 
