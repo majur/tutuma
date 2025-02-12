@@ -71,7 +71,9 @@ Rails.application.configure do
     ssl: true,
     tls: true,
     enable_starttls_auto: true,
-    openssl_verify_mode: 'none'
+    openssl_verify_mode: 'none',
+    open_timeout: 30,
+    read_timeout: 30
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
