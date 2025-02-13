@@ -68,9 +68,9 @@ Rails.application.configure do
     user_name: "postmaster@sandbox3a3c579c35204d6e964af96053277c39.mailgun.org",
     password: "c54556cdca78343073fd996ea10dadba-1654a412-d3592a14",
     authentication: :plain,
-    ssl: true,
-    tls: true,
-    ssl_version: :TLSv1_2,
+    # ssl: true,
+    # tls: true,
+    # ssl_version: :TLSv1_2,
     enable_starttls_auto: true
   }
 
