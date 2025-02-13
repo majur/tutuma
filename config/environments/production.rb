@@ -62,11 +62,11 @@ Rails.application.configure do
   # Nastavenie SMTP servera
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.m1.websupport.sk',
+    address: 'smtp.mailgun.org',
     port: 587,
     domain: 'tutuma.matase.sk',
-    user_name: Rails.application.credentials.dig(:smtp, :user_name),
-    password: Rails.application.credentials.dig(:smtp, :password),
+    user_name: "postmaster@sandbox3a3c579c35204d6e964af96053277c39.mailgun.org",
+    password: "c54556cdca78343073fd996ea10dadba-1654a412-d3592a14",
     authentication: :plain,
     ssl: true,
     tls: true,
