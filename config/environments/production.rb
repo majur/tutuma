@@ -70,6 +70,7 @@ Rails.application.configure do
     authentication: :plain,
     ssl: true,
     tls: true,
+    ssl_version: :TLSv1_2,
     enable_starttls_auto: true,
     openssl_verify_mode: 'none',
     open_timeout: 30,
