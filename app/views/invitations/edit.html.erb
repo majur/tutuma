@@ -1,0 +1,19 @@
+<%= form_with model: @user, url: update_invitation_path(token: @invitation.token), method: :patch do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true, value: @invitation.name %>
+  </div>
+  <div>
+    <%= f.label :email_address %>
+    <%= f.email_field :email_address, value: @invitation.email, readonly: true %>
+  </div>
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password, required: true %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, required: true %>
+  </div>
+  <%= f.submit "Accept Invitation" %>
+<% end %>

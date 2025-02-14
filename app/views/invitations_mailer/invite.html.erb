@@ -1,0 +1,3 @@
+<h1>Join <%= @invitation.account.name %></h1>
+<p>Click the link below to accept the invitation:</p>
+<%= link_to "Accept invitation", edit_invitation_url(token: @invitation.token) %>
