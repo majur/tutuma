@@ -6,17 +6,22 @@ class RegistrationsController < ApplicationController
     end
 
     def create
-      ActiveRecord::Base.transaction do
-        @account = Account.create!(name: params[:team_name])
-        @user = @account.users.create!(user_params.merge(admin: true))
-
+      @account = Account.new(name: params[:team_name])
+      @user = @account.users.build(user_params.merge(admin: true))
+  
+      if @account.valid? && @user.valid?
+        ActiveRecord::Base.transaction do
+          @account.save!
+          @user.save!
+        end
         start_new_session_for(@user)
         redirect_to root_path, notice: "Team registration successful!"
-      rescue ActiveRecord::RecordInvalid => e
-        Rails.logger.error "Registration failed: #{e.message}"
-        @user ||= User.new
+      else
         render :new, status: :unprocessable_entity
       end
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error "Registration failed: #{e.message}"
+      render :new, status: :unprocessable_entity
     end
 
     private
