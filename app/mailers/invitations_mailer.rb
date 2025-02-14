@@ -3,4 +3,4 @@ class InvitationsMailer < ApplicationMailer
       @invitation = invitation
       mail to: invitation.email, subject: "Invitation to join #{invitation.account.name}"
     end
-  end
+end

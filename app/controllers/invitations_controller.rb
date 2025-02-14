@@ -1,6 +1,6 @@
 class InvitationsController < ApplicationController
-  allow_unauthenticated_access only: [:edit, :update]
-  before_action :ensure_admin, only: [:new, :create]
+  allow_unauthenticated_access only: [ :edit, :update ]
+  before_action :ensure_admin, only: [ :new, :create ]
 
   def new
     @invitation = Invitation.new
@@ -43,13 +43,13 @@ class InvitationsController < ApplicationController
     handle_expired_or_accepted && return
     @user = User.new(email_address: @invitation.email, name: @invitation.name)
   end
-    
+
       def update
         @invitation = Invitation.find_by!(token: params[:token])
         handle_expired_or_accepted && return
-    
+
         @user = User.new(user_params.merge(account: @invitation.account, admin: false))
-    
+
         if @user.save
           @invitation.update!(accepted: true)
           start_new_session_for(@user)
@@ -58,21 +58,21 @@ class InvitationsController < ApplicationController
           render :edit, status: :unprocessable_entity
         end
       end
-  
+
     private
 
     def handle_expired_or_accepted
       if @invitation.expired? || @invitation.accepted == true
         redirect_to new_session_path, alert: "Invitation invalid/expired."
-        return true
+        true
       end
     end
 
     def user_params
       params.require(:user).permit(:name, :email_address, :password, :password_confirmation)
     end
-  
+
     def ensure_admin
       redirect_to root_path, alert: "Not authorized" unless current_user.admin?
     end
-  end
+end
