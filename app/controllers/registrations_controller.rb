@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
     def create
       @account = Account.new(name: params[:team_name])
       @user = @account.users.build(user_params.merge(admin: true))
-  
+
       if @account.valid? && @user.valid?
         ActiveRecord::Base.transaction do
           @account.save!
