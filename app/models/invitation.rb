@@ -13,7 +13,10 @@ class Invitation < ApplicationRecord
   private
 
   def generate_token
-    self.token = SecureRandom.hex(20)
+    loop do
+      self.token = SecureRandom.alphanumeric(20)
+      break unless Invitation.exists?(token: token)
+    end
     self.expires_at ||= 1.week.from_now
   end
 end
