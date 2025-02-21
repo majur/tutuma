@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
   before_action :ensure_admin, only: [ :new, :create ]
 
   def new
-    @invitation = Invitation.new
+    render Components::Invitations::NewComponent.new
   end
 
   def create

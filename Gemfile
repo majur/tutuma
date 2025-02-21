@@ -64,3 +64,11 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "phlex-rails", "~> 2.0", :github => "phlex-ruby/phlex-rails", :branch => "main"
+
+gem "tailwind_merge", "~> 0.16.0"
+
+gem "tailwindcss-rails", "~> 4.0"
+
+gem "ruby_ui"
