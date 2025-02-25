@@ -66,3 +66,4 @@ group :test do
 end
 
 gem "view_component"
+gem "tailwindcss-rails"
