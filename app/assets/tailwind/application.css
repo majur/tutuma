@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Testovací štýl pre overenie kompilácie */
+.test-style {
+  background-color: purple !important;
+}
