@@ -25,42 +25,4 @@
       </button>
       <%= submit_tag "Send Invitations", class: "px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700" %>
     </div>
-  <% end %>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const addButton = document.querySelector('button[data-action="click->invitations#addRow"]');
-  if (addButton) {
-    addButton.addEventListener('click', function(event) {
-      event.preventDefault();
-      
-      // Nájdenie prvého riadku, ktorý sa bude klonovať
-      const template = document.querySelector('.invitation-row');
-      if (!template) {
-        console.error("Template not found");
-        return;
-      }
-      
-      // Klonovanie riadku
-      const newRow = template.cloneNode(true);
-      
-      // Vyčistenie hodnôt v inputoch
-      const inputs = newRow.querySelectorAll('input');
-      inputs.forEach(input => {
-        input.value = '';
-      });
-      
-      // Pridanie nového riadku do kontajnera
-      const container = document.getElementById('invitation-fields');
-      if (container) {
-        container.appendChild(newRow);
-      } else {
-        console.error("Container not found");
-      }
-    });
-  } else {
-    console.error("Add button not found");
-  }
-});
-</script> 
+  <% end %> 
