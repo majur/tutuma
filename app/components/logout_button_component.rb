@@ -3,8 +3,8 @@ class LogoutButtonComponent < ViewComponent::Base
       @full_width = full_width
       @css_class = css_class
     end
-  
+
     private
-  
+
     attr_reader :full_width, :css_class
-  end
+end
