@@ -22,7 +22,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="min-h-screen bg-gray-50">
+    <%= render(HeaderComponent.new(current_user: current_user)) if current_user %>
+
+    <main class="container mx-auto mt-6 px-5">
+      <%= yield %>
+    </main>
   </body>
 </html>
