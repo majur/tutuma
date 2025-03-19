@@ -5,12 +5,7 @@ Rails.application.routes.draw do
 
   resource :session, only: [ :new, :create, :destroy ]
   resources :passwords, param: :token, only: [ :new, :create, :edit, :update ]
-  resources :invitations, only: [ :new, :create ] do
-    collection do
-      get "accept", to: "invitations#edit", as: :edit
-      patch "accept/:token", to: "invitations#update", as: :update
-    end
-  end
+  resources :invitations, only: [:new, :create, :edit, :update], param: :token
 
   get "registration", to: "registrations#new", as: :new_registration
   post "registration", to: "registrations#create"
