@@ -1,8 +1,8 @@
-<div class="todo-container sign-in-container" data-controller="sessions--sign-in-component">
+<div class="todo-container sign-in-container" data-controller="passwords--reset-form-component">
   <div class="theme-toggle">
     <button id="theme-switch">🌓</button>
   </div>
-  <h1>Prihlásenie</h1>
+  <h1>Obnovenie hesla</h1>
   
   <% if @flash[:alert] %>
     <div class="alert-message"><%= @flash[:alert] %></div>
@@ -12,33 +12,24 @@
     <div class="notice-message"><%= @flash[:notice] %></div>
   <% end %>
   
-  <%= form_with url: session_path, class: "sign-in-form" do |form| %>
+  <%= form_with url: passwords_path, class: "sign-in-form" do |form| %>
     <div class="input-container">
       <%= form.email_field :email_address, 
                          required: true, 
                          autofocus: true, 
                          autocomplete: "username", 
                          placeholder: "Zadajte vašu emailovú adresu", 
-                         value: @params[:email_address],
+                         value: @email_address,
                          class: "task-input" %>
     </div>
     
-    <div class="input-container">
-      <%= form.password_field :password, 
-                            required: true, 
-                            autocomplete: "current-password", 
-                            placeholder: "Zadajte vaše heslo", 
-                            maxlength: 72,
-                            class: "task-input" %>
-    </div>
-    
     <div class="button-container">
-      <%= form.submit "Prihlásiť sa", class: "submit-button" %>
+      <%= form.submit "Odoslať inštrukcie na reset", class: "submit-button" %>
     </div>
   <% end %>
   
   <div class="forgot-password">
-    <%= link_to "Zabudli ste heslo?", new_password_path, class: "forgot-link" %>
+    <%= link_to "Späť na prihlásenie", new_session_path, class: "forgot-link" %>
   </div>
 </div>
 
