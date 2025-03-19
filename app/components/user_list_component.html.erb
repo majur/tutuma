@@ -1,0 +1,11 @@
+<ul class="user-list">
+  <% @users.each do |user| %>
+    <li class="user-list-item">
+      <span class="user-name"><%= user.name %></span>
+      <span class="user-email">(<%= user.email_address %>)</span>
+      <% if user.admin? %>
+        <span class="user-admin-badge">(Admin)</span>
+      <% end %>
+    </li>
+  <% end %>
+</ul> 

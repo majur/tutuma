@@ -1,0 +1,244 @@
+<div class="todo-container sign-in-container">
+  <div class="theme-toggle">
+    <button id="theme-switch">🌓</button>
+  </div>
+  <h1>Prihlásenie</h1>
+  
+  <% if @flash[:alert] %>
+    <div class="alert-message"><%= @flash[:alert] %></div>
+  <% end %>
+  
+  <% if @flash[:notice] %>
+    <div class="notice-message"><%= @flash[:notice] %></div>
+  <% end %>
+  
+  <%= form_with url: session_path, class: "sign-in-form" do |form| %>
+    <div class="input-container">
+      <%= form.email_field :email_address, 
+                         required: true, 
+                         autofocus: true, 
+                         autocomplete: "username", 
+                         placeholder: "Zadajte vašu emailovú adresu", 
+                         value: @params[:email_address],
+                         class: "task-input" %>
+    </div>
+    
+    <div class="input-container">
+      <%= form.password_field :password, 
+                            required: true, 
+                            autocomplete: "current-password", 
+                            placeholder: "Zadajte vaše heslo", 
+                            maxlength: 72,
+                            class: "task-input" %>
+    </div>
+    
+    <div class="button-container">
+      <%= form.submit "Prihlásiť sa", class: "submit-button" %>
+    </div>
+  <% end %>
+  
+  <div class="forgot-password">
+    <%= link_to "Zabudli ste heslo?", new_password_path, class: "forgot-link" %>
+  </div>
+</div>
+
+<style>
+  :root {
+    --bg-color: #f5f0e1;
+    --shadow-light: #fdfaf2;
+    --shadow-dark: #d5ceb8;
+    --accent: #8c7851;
+    --text: #5a4a3f;
+    --completed: #7d9b76;
+    --error: #e26d75;
+    --success: #588157;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #292933;
+      --shadow-light: #3a3a47;
+      --shadow-dark: #1a1a20;
+      --accent: #c49b70;
+      --text: #e0d6c8;
+      --completed: #588157;
+      --error: #e26d75;
+      --success: #7d9b76;
+    }
+  }
+  
+  [data-theme="dark"] {
+    --bg-color: #292933;
+    --shadow-light: #3a3a47;
+    --shadow-dark: #1a1a20;
+    --accent: #c49b70;
+    --text: #e0d6c8;
+    --completed: #588157;
+    --error: #e26d75;
+    --success: #7d9b76;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: var(--text);
+  }
+  
+  .sign-in-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--bg-color);
+    border-radius: 24px;
+    box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+    padding: 30px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: var(--text);
+  }
+  
+  .input-container {
+    display: flex;
+    margin-bottom: 24px;
+  }
+  
+  .task-input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+    font-size: 16px;
+    color: var(--text);
+    outline: none;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  
+  .submit-button {
+    padding: 15px 30px;
+    border: none;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  
+  .submit-button:active {
+    box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light);
+    transform: scale(0.98);
+  }
+  
+  .alert-message {
+    color: var(--error);
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+  }
+  
+  .notice-message {
+    color: var(--success);
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+  }
+  
+  .forgot-password {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .forgot-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  
+  .forgot-link:hover {
+    text-decoration: underline;
+  }
+  
+  .theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  #theme-switch {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    transition: all 0.2s ease;
+  }
+  
+  #theme-switch:active {
+    box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+    font-size: 18px;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const themeSwitch = document.getElementById('theme-switch');
+    
+    // Theme switcher functionality
+    themeSwitch.addEventListener('click', function() {
+      if (document.body.getAttribute('data-theme') === 'dark') {
+        document.body.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        themeSwitch.textContent = '🌓';
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        themeSwitch.textContent = '☀️';
+      }
+    });
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      themeSwitch.textContent = '☀️';
+    } else {
+      // Check system preference if no saved preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.body.setAttribute('data-theme', 'dark');
+        themeSwitch.textContent = '☀️';
+      }
+    }
+  });
+</script> 
