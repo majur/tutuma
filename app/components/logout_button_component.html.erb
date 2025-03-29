@@ -1,4 +1,15 @@
-<%= link_to "Odhlásiť sa", 
-    logout_path, 
-    data: { "turbo-method": :delete },
-    class: "#{full_width ? 'w-full' : ''} #{css_class}" %>
+<% if tag == :a %>
+  <%= link_to(logout_path, 
+      class: button_classes,
+      style: button_styles,
+      data: { "turbo-method": :delete }) do %>
+    <%= button_text %>
+  <% end %>
+<% else %>
+  <%= button_to(logout_path, 
+      method: :delete,
+      class: button_classes,
+      style: button_styles) do %>
+    <%= button_text %>
+  <% end %>
+<% end %>

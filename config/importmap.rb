@@ -5,3 +5,6 @@ pin "@hotwired/turbo-rails", to: "turbo.min.js"
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
+
+# Primer Components použijeme cez štandardné importy v application.js
+# a nebudeme ich mapovať cez importmap, keďže spôsobujú problémy

@@ -7,4 +7,17 @@
  * depending on specificity.
  *
  * Consider organizing styles into separate files for maintainability.
+ *
+ *= require_self
+ *= require primer
  */
+
+/* Explicitné štýly pre pozadie hlavičky */
+.Header.color-bg-subtle {
+  background-color: #f6f8fa !important;
+}
+
+/* Štýly pre tlačidlá */
+button, .btn, .button {
+  cursor: pointer;
+}

@@ -1,25 +1,31 @@
-<div>
-  <h1><%= account.name %></h1>
-  <h2>Team Members</h2>
-
-  <% if current_user.admin? %>
-    <%= link_to "Invite Team Members", 
-        new_invitation_path %>
-  <% end %>
-
-  <ul>
-    <% users.each do |user| %>
-      <li>
-        <div>
-          <span><%= user.name %></span>
-          <span>(<%= user.email_address %>)</span>
-          <% if user.admin? %>
-            <span>Admin</span>
-          <% end %>
-        </div>
-      </li>
+<div class="Box">
+  <div class="Box-header">
+    <h2 class="Box-title">Členovia tímu</h2>
+  </div>
+  
+  <div class="Box-body">
+    <div class="Box">
+      <ul class="Box-list">
+        <% users.each do |user| %>
+          <li class="Box-row d-flex flex-items-center">
+            <div class="flex-auto">
+              <span class="text-bold"><%= user.name %></span>
+              <span class="text-gray">(<%= user.email_address %>)</span>
+              <% if user.admin? %>
+                <span class="Label Label--success ml-2">Admin</span>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <% if current_user.admin? %>
+      <div class="mt-3">
+        <%= link_to "Pozvať nových členov", 
+            new_invitation_path,
+            class: "btn btn-primary" %>
+      </div>
     <% end %>
-  </ul>
-
-  <%= render LogoutButtonComponent.new(full_width: true) %>
+  </div>
 </div>

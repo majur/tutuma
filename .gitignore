@@ -38,3 +38,12 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Node.js
+/node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Vendorované JavaScript súbory generované importmap
+/vendor/javascript

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@primer/css": "^21.5.1",
+    "@primer/primitives": "10.x",
+    "@primer/view-components": "^0.39.0"
+  }
+}
