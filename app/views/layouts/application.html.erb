@@ -17,17 +17,15 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag "application", "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen bg-gray-50">
+  <body>
     <%= render(HeaderComponent.new(current_user: current_user)) if current_user %>
 
-    <main class="container mx-auto mt-6 px-5">
+    <main>
       <%= yield %>
     </main>
   </body>
