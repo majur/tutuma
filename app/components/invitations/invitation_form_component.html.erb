@@ -1,0 +1,32 @@
+<div class="p-4">
+  <div class="Box p-4">
+    <h1 class="h1 mb-4">Pozvať členov tímu</h1>
+
+    <%= form_tag invitations_path, method: :post, data: { controller: "invitations" } do %>
+      <div id="invitation-fields">
+        <div class="invitation-row mb-3">
+          <%= fields_for "invitations[]", invitation do |f| %>
+            <div class="d-flex flex-column flex-md-row flex-items-stretch mb-2">
+              <div class="FormControl flex-auto mr-md-2 mb-2 mb-md-0">
+                <%= f.label :name, "Meno", class: "FormControl-label" %>
+                <%= f.text_field :name, required: true, class: "FormControl-input" %>
+              </div>
+              <div class="FormControl flex-auto">
+                <%= f.label :email, "Email", class: "FormControl-label" %>
+                <%= f.email_field :email, required: true, class: "FormControl-input" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column-reverse flex-md-row">
+        <button type="button" data-action="invitations#addRow" class="btn btn-outline mr-md-2 mb-2 mb-md-0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.5v2.5H11a.75.75 0 0 1 0 1.5H8.5V11a.75.75 0 0 1-1.5 0V8.5H4.5a.75.75 0 0 1 0-1.5H7V4.5a.75.75 0 0 1 1.5 0Z"></path></svg>
+          Pridať ďalšiu osobu
+        </button>
+        <%= submit_tag "Poslať pozvánky", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div> 

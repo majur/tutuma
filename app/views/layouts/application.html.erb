@@ -35,6 +35,18 @@
     <%= render(HeaderComponent.new(current_user: current_user)) if defined?(current_user) && current_user %>
 
     <main class="container-lg p-responsive py-5">
+      <% if flash[:notice].present? %>
+        <%= render Primer::Beta::Flash.new(scheme: :success, full: true) do %>
+          <%= flash[:notice] %>
+        <% end %>
+      <% end %>
+
+      <% if flash[:alert].present? %>
+        <%= render Primer::Beta::Flash.new(scheme: :danger, full: true) do %>
+          <%= flash[:alert] %>
+        <% end %>
+      <% end %>
+
       <%= yield %>
     </main>
   </body>
