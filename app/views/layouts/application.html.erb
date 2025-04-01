@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= content_for(:title) || "Tutuma" %></title>
+    <title><%= content_for(:title) || "Tutuma2" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -17,17 +17,36 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <%# Primer CSS sa načítava cez lokálnu inštaláciu %>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag "application", "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%= stylesheet_link_tag "@primer/css/dist/primer.css", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "@primer/view-components/app/assets/styles/primer_view_components.css", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "@primer/primitives/dist/css/primitives.css", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "@primer/primitives/dist/css/functional/themes/light.css", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "@primer/primitives/dist/css/functional/themes/dark.css", "data-turbo-track": "reload" %>
+
+    <%= javascript_include_tag "@primer/view-components/app/assets/javascripts/primer_view_components.js", "data-turbo-track": "reload" %>
   </head>
 
-  <body class="min-h-screen bg-gray-50">
-    <%= render(HeaderComponent.new(current_user: current_user)) if current_user %>
+  <body data-color-mode="light" data-light-theme="light" data-dark-theme="dark">
+    <%= render(HeaderComponent.new(current_user: current_user)) if defined?(current_user) && current_user %>
 
-    <main class="container mx-auto mt-6 px-5">
+    <main class="container-lg p-responsive py-5">
+      <% if flash[:notice].present? %>
+        <%= render Primer::Beta::Flash.new(scheme: :success, full: true) do %>
+          <%= flash[:notice] %>
+        <% end %>
+      <% end %>
+
+      <% if flash[:alert].present? %>
+        <%= render Primer::Beta::Flash.new(scheme: :danger, full: true) do %>
+          <%= flash[:alert] %>
+        <% end %>
+      <% end %>
+
       <%= yield %>
     </main>
   </body>

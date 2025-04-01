@@ -1,17 +1,21 @@
-<header class="w-full border-b border-gray-200 bg-white shadow-sm">
-  <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-    <div>
-      <%= link_to root_path, class: "text-xl font-bold text-indigo-600" do %>
+<header class="Header" style="background-color: #222222;">
+  <div class="container-lg d-flex flex-items-center py-2" style="display: flex; align-items: center; padding-top: 0.5rem; padding-bottom: 0.5rem; max-width: 1080px; margin: 0 auto;">
+    <div class="flex-auto" style="flex: 1 1 auto;">
+      <%= link_to root_path, class: "Header-link" do %>
         Tutuma
       <% end %>
     </div>
 
-    <div class="flex items-center">
+    <div class="d-flex flex-items-center" style="display: flex; align-items: center;">
       <% if current_user %>
-        <span class="mr-4 text-gray-700"><%= current_user.account.name %></span>
+        <span class="Label Label--primary mr-3" style="display: inline-block; padding: 0.125em 0.5em; font-size: 0.85em; font-weight: 500; line-height: 1.5; border-radius: 2em; background-color: #0366d6; color: white; margin-right: 1rem;"><%= current_user.account.name %></span>
       <% end %>
-      <div>
-        <%= render LogoutButtonComponent.new %>
+      <div class="ml-auto" style="margin-left: auto;">
+        <%= render LogoutButtonComponent.new(
+          scheme: :danger,
+          size: :medium,
+          tag: :a
+        ) %>
       </div>
     </div>
   </div>
