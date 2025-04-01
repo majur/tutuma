@@ -17,4 +17,4 @@ module Invitations
       @flash[:notice]
     end
   end
-end 
+end

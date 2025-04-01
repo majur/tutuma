@@ -19,4 +19,4 @@ module Sessions
       @flash[:notice]
     end
   end
-end 
+end

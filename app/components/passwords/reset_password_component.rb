@@ -15,4 +15,4 @@ module Passwords
       @flash[:alert]
     end
   end
-end 
+end

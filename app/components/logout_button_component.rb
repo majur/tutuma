@@ -16,8 +16,8 @@ class LogoutButtonComponent < ViewComponent::Base
   end
 
   def button_classes
-    classes = ["btn"]
-    
+    classes = [ "btn" ]
+
     # Scheme class
     classes << case @scheme
     when :danger
@@ -29,7 +29,7 @@ class LogoutButtonComponent < ViewComponent::Base
     else
       "btn-default"
     end
-    
+
     # Size class
     classes << case @size
     when :small
@@ -39,13 +39,13 @@ class LogoutButtonComponent < ViewComponent::Base
     else
       # Medium je default, nepotrebuje extra triedu
     end
-    
+
     # Block display
     classes << "btn-block" if @full_width
-    
+
     # Custom classes
     classes << @css_class if @css_class
-    
+
     classes.compact.join(" ")
   end
 
