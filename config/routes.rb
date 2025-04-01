@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "account/switch"
+  post "account/set_current", as: :account_set_current
   root "users#index"
 
   get "up", to: "rails/health#show", as: :rails_health_check

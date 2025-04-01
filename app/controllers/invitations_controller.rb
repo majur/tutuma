@@ -17,9 +17,11 @@ class InvitationsController < ApplicationController
           name = invitation_param[:name].strip
 
           next if email.blank? || name.blank?
-          next if User.exists?(email_address: email)
+          if User.joins(:account_memberships).where(email_address: email, account_memberships: { account_id: current_account.id }).exists?
+            next
+          end
 
-          invitation = current_user.account.invitations.create!(
+          invitation = current_account.invitations.create!(
             email: email.downcase,
             name: name,
             inviter: current_user,
@@ -32,47 +34,78 @@ class InvitationsController < ApplicationController
         InvitationsMailer.invite(invitation).deliver_later
       end
 
-      redirect_to users_path, notice: "Invitations sent successfully."
+      redirect_to users_path, notice: "Pozvánky boli úspešne odoslané."
     rescue ActiveRecord::RecordInvalid => e
-      redirect_to new_invitation_path, alert: "Error: #{e.message}"
+      redirect_to new_invitation_path, alert: "Chyba: #{e.message}"
     end
   end
 
   def edit
     @invitation = Invitation.find_by!(token: params[:token])
     handle_expired_or_accepted && return
-    @user = User.new(email_address: @invitation.email, name: @invitation.name)
+    
+    @existing_user = User.find_by(email_address: @invitation.email)
+    
+    if @existing_user
+      render :existing_user
+    else
+      @user = User.new(email_address: @invitation.email, name: @invitation.name)
+      render :edit
+    end
   end
 
-      def update
-        @invitation = Invitation.find_by!(token: params[:token])
-        handle_expired_or_accepted && return
+  def update
+    @invitation = Invitation.find_by!(token: params[:token])
+    handle_expired_or_accepted && return
 
-        @user = User.new(user_params.merge(account: @invitation.account, admin: false))
-
-        if @user.save
-          @invitation.update!(accepted: true)
-          start_new_session_for(@user)
-          redirect_to root_path, notice: "Account activated!"
-        else
-          render :edit, status: :unprocessable_entity
-        end
+    @existing_user = User.find_by(email_address: @invitation.email)
+    
+    if @existing_user
+      if @existing_user.accounts.include?(@invitation.account)
+        redirect_to new_session_path, alert: "Už ste členom tohto tímu."
+        return
       end
-
-    private
-
-    def handle_expired_or_accepted
-      if @invitation.expired? || @invitation.accepted == true
-        redirect_to new_session_path, alert: "Invitation invalid/expired."
-        true
+      
+      @existing_user.account_memberships.create!(account: @invitation.account, admin: false)
+      @invitation.update!(accepted: true)
+      
+      start_new_session_for(@existing_user)
+      session[:current_account_id] = @invitation.account_id
+      Current.account = @invitation.account
+      
+      redirect_to root_path, notice: "Boli ste pridaný do tímu #{@invitation.account.name}!"
+    else
+      @user = User.new(user_params)
+      
+      if @user.save
+        @user.account_memberships.create!(account: @invitation.account, admin: false)
+        @invitation.update!(accepted: true)
+        
+        start_new_session_for(@user)
+        session[:current_account_id] = @invitation.account_id
+        Current.account = @invitation.account
+        
+        redirect_to root_path, notice: "Váš účet bol aktivovaný!"
+      else
+        render :edit, status: :unprocessable_entity
       end
     end
+  end
 
-    def user_params
-      params.require(:user).permit(:name, :email_address, :password, :password_confirmation)
-    end
+  private
 
-    def ensure_admin
-      redirect_to root_path, alert: "Not authorized" unless current_user.admin?
+  def handle_expired_or_accepted
+    if @invitation.expired? || @invitation.accepted == true
+      redirect_to new_session_path, alert: "Pozvánka je neplatná alebo už bola použitá."
+      true
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation)
+  end
+
+  def ensure_admin
+    redirect_to root_path, alert: "Nemáte oprávnenie na túto akciu" unless current_user.admin_in?(current_account)
+  end
 end
