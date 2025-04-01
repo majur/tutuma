@@ -3,11 +3,11 @@ class AccountController < ApplicationController
     # Zobrazenie zoznamu tenantov pre prepínanie
     @accounts = current_user.accounts
   end
-  
+
   def set_current
     account_id = params[:account_id]
     account = current_user.accounts.find_by(id: account_id)
-    
+
     if account.present?
       session[:current_account_id] = account.id
       Current.account = account

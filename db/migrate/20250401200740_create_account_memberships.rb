@@ -7,7 +7,7 @@ class CreateAccountMemberships < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
-    add_index :account_memberships, [:user_id, :account_id], unique: true
+
+    add_index :account_memberships, [ :user_id, :account_id ], unique: true
   end
 end

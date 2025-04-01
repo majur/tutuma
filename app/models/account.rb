@@ -7,7 +7,7 @@ class Account < ApplicationRecord
   def admin
     account_memberships.find_by(admin: true)&.user
   end
-  
+
   def admins
     users.joins(:account_memberships).where(account_memberships: { account_id: id, admin: true })
   end

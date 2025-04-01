@@ -43,9 +43,9 @@ class InvitationsController < ApplicationController
   def edit
     @invitation = Invitation.find_by!(token: params[:token])
     handle_expired_or_accepted && return
-    
+
     @existing_user = User.find_by(email_address: @invitation.email)
-    
+
     if @existing_user
       render :existing_user
     else
@@ -59,32 +59,32 @@ class InvitationsController < ApplicationController
     handle_expired_or_accepted && return
 
     @existing_user = User.find_by(email_address: @invitation.email)
-    
+
     if @existing_user
       if @existing_user.accounts.include?(@invitation.account)
         redirect_to new_session_path, alert: "Už ste členom tohto tímu."
         return
       end
-      
+
       @existing_user.account_memberships.create!(account: @invitation.account, admin: false)
       @invitation.update!(accepted: true)
-      
+
       start_new_session_for(@existing_user)
       session[:current_account_id] = @invitation.account_id
       Current.account = @invitation.account
-      
+
       redirect_to root_path, notice: "Boli ste pridaný do tímu #{@invitation.account.name}!"
     else
       @user = User.new(user_params)
-      
+
       if @user.save
         @user.account_memberships.create!(account: @invitation.account, admin: false)
         @invitation.update!(accepted: true)
-        
+
         start_new_session_for(@user)
         session[:current_account_id] = @invitation.account_id
         Current.account = @invitation.account
-        
+
         redirect_to root_path, notice: "Váš účet bol aktivovaný!"
       else
         render :edit, status: :unprocessable_entity

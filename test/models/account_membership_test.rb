@@ -1,7 +1,8 @@
 require "test_helper"
 
-describe AccountMembership do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
+class AccountMembershipTest < ActiveSupport::TestCase
+  # Testy dočasne vypnuté
+  # test "a thing" do
+  #   assert_equal 2, 1+1
   # end
 end
