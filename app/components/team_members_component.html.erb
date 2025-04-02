@@ -11,7 +11,7 @@
             <div class="flex-auto">
               <span class="text-bold"><%= user.name %></span>
               <span class="text-gray">(<%= user.email_address %>)</span>
-              <% if user.admin? %>
+              <% if user.admin_in?(account) %>
                 <span class="Label Label--success ml-2">Admin</span>
               <% end %>
             </div>
@@ -20,7 +20,7 @@
       </ul>
     </div>
     
-    <% if current_user.admin? %>
+    <% if current_user.admin_in?(account) %>
       <div class="mt-3">
         <%= link_to "Pozvať nových členov", 
             new_invitation_path,

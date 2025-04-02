@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_10_202554) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_01_200842) do
+  create_table "account_memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "account_id", null: false
+    t.boolean "admin", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_memberships_on_account_id"
+    t.index ["user_id", "account_id"], name: "index_account_memberships_on_user_id_and_account_id", unique: true
+    t.index ["user_id"], name: "index_account_memberships_on_user_id"
+  end
+
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -46,15 +57,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_10_202554) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "account_id", null: false
-    t.boolean "admin", default: false
     t.string "name"
-    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "account_memberships", "accounts"
+  add_foreign_key "account_memberships", "users"
   add_foreign_key "invitations", "accounts"
   add_foreign_key "invitations", "users", column: "inviter_id"
   add_foreign_key "sessions", "users"
-  add_foreign_key "users", "accounts"
 end
