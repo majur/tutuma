@@ -66,8 +66,17 @@ class InvitationsController < ApplicationController
         return
       end
 
-      @existing_user.account_memberships.create!(account: @invitation.account, admin: false)
-      @invitation.update!(accepted: true)
+      ActiveRecord::Base.transaction do
+        @existing_user.account_memberships.create!(account: @invitation.account, admin: false)
+        
+        # Pridanie používateľa do predvoleného tímu účtu
+        default_team = @invitation.account.teams.first
+        if default_team
+          @existing_user.team_memberships.create!(team: default_team)
+        end
+        
+        @invitation.update!(accepted: true)
+      end
 
       start_new_session_for(@existing_user)
       session[:current_account_id] = @invitation.account_id
@@ -78,8 +87,17 @@ class InvitationsController < ApplicationController
       @user = User.new(user_params)
 
       if @user.save
-        @user.account_memberships.create!(account: @invitation.account, admin: false)
-        @invitation.update!(accepted: true)
+        ActiveRecord::Base.transaction do
+          @user.account_memberships.create!(account: @invitation.account, admin: false)
+          
+          # Pridanie používateľa do predvoleného tímu účtu
+          default_team = @invitation.account.teams.first
+          if default_team
+            @user.team_memberships.create!(team: default_team)
+          end
+          
+          @invitation.update!(accepted: true)
+        end
 
         start_new_session_for(@user)
         session[:current_account_id] = @invitation.account_id

@@ -14,6 +14,10 @@ class RegistrationsController < ApplicationController
           @account.save!
           @user.save!
           @user.account_memberships.create!(account: @account, admin: true)
+          
+          # Vytvorenie predvoleného tímu pri registrácii a pridanie používateľa ako člena
+          default_team = @account.create_default_team
+          @user.team_memberships.create!(team: default_team)
         end
         start_new_session_for(@user)
         session[:current_account_id] = @account.id
