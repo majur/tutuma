@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_01_200842) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_02_213245) do
   create_table "account_memberships", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "account_id", null: false
@@ -52,6 +52,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_01_200842) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "team_memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_memberships_on_team_id"
+    t.index ["user_id", "team_id"], name: "index_team_memberships_on_user_id_and_team_id", unique: true
+    t.index ["user_id"], name: "index_team_memberships_on_user_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_teams_on_account_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -66,4 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_01_200842) do
   add_foreign_key "invitations", "accounts"
   add_foreign_key "invitations", "users", column: "inviter_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "team_memberships", "teams"
+  add_foreign_key "team_memberships", "users"
+  add_foreign_key "teams", "accounts"
 end
